@@ -1,187 +1,62 @@
-import { useRef, useEffect, useState } from 'react'
-import * as tt from '@tomtom-international/web-sdk-maps'
-import * as ttapi from '@tomtom-international/web-sdk-services'
-import './Map.css'
-import '@tomtom-international/web-sdk-maps/dist/maps.css'
+import React, { Component } from "react";
+import { Map, TileLayer, Polyline } from "react-leaflet";
+import L from "leaflet";
 
-const Map = () => {
-  const mapElement = useRef()
-  const [map, setMap] = useState({})
-  const [longitude, setLongitude] = useState(-0.112869)
-  const [latitude, setLatitude] = useState(51.504)
-
-  const convertToPoints = (lngLat) => {
-    return {
-      point: {
-        latitude: lngLat.lat,
-        longitude: lngLat.lng
-      }
-    }
-  }
-
-  const drawRoute = (geoJson, map) => {
-    if (map.getLayer('route')) {
-      map.removeLayer('route')
-      map.removeSource('route')
-    }
-    map.addLayer({
-      id: 'route',
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: geoJson
-      },
-      paint: {
-        'line-color': '#4a90e2',
-        'line-width': 6
-  
-      }
-    })
-  }
-
-  const addDeliveryMarker = (lngLat, map) => {
-    const element = document.createElement('div')
-    element.className = 'marker-delivery'
-    new tt.Marker({
-      element: element
-    })
-    .setLngLat(lngLat)
-    .addTo(map)
-  }
-
-  useEffect(() => {
-    const origin = {
-      lng: longitude,
-      lat: latitude,
-    }
-    const destinations = []
-
-    let map = tt.map({
-      key:'xmYY8TlCQfJxFUw3nD4NehjmjBTQrcuQ',
-      container: mapElement.current,
-      stylesVisibility: {
-        trafficIncidents: true,
-        trafficFlow: true,
-      },
-      center: [longitude, latitude],
-      zoom: 14,
-    })
-    setMap(map)
-
-    const addMarker = () => {
-      const popupOffset = {
-        bottom: [0, -25]
-      }
-      const popup = new tt.Popup({ offset: popupOffset }).setHTML('This is you!')
-      const element = document.createElement('div')
-      element.className = 'marker'
-
-      const marker = new tt.Marker({
-        draggable: true,
-        element: element,
-      })
-        .setLngLat([longitude, latitude])
-        .addTo(map)
+class MapComp extends Component {
+  state = {
+    lat: 42.4018896,
+    lng: -72.5321144,
+    zoom: 14,
+    data: [
       
-      marker.on('dragend', () => {
-        const lngLat = marker.getLngLat()
-        setLongitude(lngLat.lng)
-        setLatitude(lngLat.lat)
-      })
-
-      marker.setPopup(popup).togglePopup()
+      {
+        from_lat: "42.4018896",
+        from_long: "-72.5321144",
+        id: "132512",
+        to_lat: "42.3754188",
+        to_long: "",
+      },
       
-    }
-    addMarker()
+    ]
+  };
 
-    const sortDestinations = (locations) => {
-      const pointsForDestinations = locations.map((destination) => {
-        return convertToPoints(destination)
-      })
-      const callParameters = {
-        key: process.env.REACT_APP_TOM_TOM_API_KEY,
-        destinations: pointsForDestinations,
-        origins: [convertToPoints(origin)],
-      }
+  render() {
+    const position = [this.state.lat, this.state.lng];
 
-    return new Promise((resolve, reject) => {
-      ttapi.services
-        .matrixRouting(callParameters)
-        .then((matrixAPIResults) => {
-          const results = matrixAPIResults.matrix[0]
-          const resultsArray = results.map((result, index) => {
-            return {
-              location: locations[index],
-              drivingtime: result.response.routeSummary.travelTimeInSeconds,
-            }
-          })
-          resultsArray.sort((a, b) => {
-            return a.drivingtime - b.drivingtime
-          })
-          const sortedLocations = resultsArray.map((result) => {
-            return result.location
-          })
-          resolve(sortedLocations)
-        })
-      })
-    }
+    const from_lat = this.state.data.map(start => start.from_lat)
+    const to_lat = this.state.data.map(to => to.to_lat)
 
-    const recalculateRoutes = () => {
-      sortDestinations(destinations).then((sorted) => {
-        sorted.unshift(origin)
+    const from_long = this.state.data.map(start => start.from_long)
+    const to_long = this.state.data.map(to => to.to_long)
 
-        ttapi.services
-          .calculateRoute({
-            key: process.env.REACT_APP_TOM_TOM_API_KEY,
-            locations: sorted,
-          })
-          .then((routeData) => {
-            const geoJson = routeData.toGeoJson()
-            drawRoute(geoJson, map)
-        })
-      })
-    }
-
-
-    map.on('click', (e) => {
-      destinations.push(e.lngLat)
-      addDeliveryMarker(e.lngLat, map)
-      recalculateRoutes()
-    })
-
-    return () => map.remove()
-  }, [longitude, latitude])
-
-  return (
-    <>
-      {map && (
-        <div className="app">
-          <div ref={mapElement} className="map" />
-          <div className="search-bar">
-            <h1>Where to?</h1>
-            <input
-              type="text"
-              id="longitude"
-              className="longitude"
-              placeholder="Put in Longitude"
-              onChange={(e) => {
-                setLongitude(e.target.value)
-              }}
-            />
-            <input
-              type="text"
-              id="latitude"
-              className="latitude"
-              placeholder="Put in latitude"
-              onChange={(e) => {
-                setLatitude(e.target.value)
-              }}
-            />
-          </div>
-        </div>
-      )}
-    </>
-  )
+    return (
+      <div id="map">
+        <Map
+          style={{ height: "100vh" }}
+          center={position}
+          zoom={this.state.zoom}
+        >
+          <TileLayer
+             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+           {this.state.data.map(({id, from_lat, from_long, to_lat, to_long}) => {
+            return <Polyline key={id} positions={[
+              [42.4018896, -72.5321144], [42.4023087, -72.5320295], [42.4022603, -72.5317659], [42.4019587, -72.5314344], [42.4019759, -72.5312053], [42.402012, -72.530698], [42.402044, -72.530455], [42.402133, -72.529864], [42.4021953, -72.5294269], [42.4023181, -72.5285657], [42.4022885, -72.5285497], [42.3993252, -72.5280954], [42.3993233, -72.528006], [42.3991403, -72.5280242], [42.398794, -72.52805], [42.398235, -72.528072], [42.3981042, -72.5280722], [42.398044, -72.52807], [42.3972386, -72.527873], [42.3972654, -72.5277895], [42.3973943, -72.5274197], [42.3972078, -72.5273055], [42.3963829, -72.5268272], [42.3957157, -72.5264391], [42.3954964, -72.5263047], [42.395418, -72.526229], [42.3953479, -72.5261835], [42.3951078, -72.5260344], [42.3949663, -72.5260639], [42.3949441, -72.5260702], [42.394114, -72.525553], [42.39396, -72.5254646], [42.3937517, -72.5253372], [42.3936413, -72.5252549], [42.3935376, -72.5254718], [42.3934758, -72.5256362], [42.3934125, -72.5258221], [42.393386, -72.5259278], [42.3933506, -72.5260382], [42.3926329, -72.5257063], [42.3925689, -72.5256909], [42.3925804, -72.5256131], [42.392416, -72.5255654], [42.3918632, -72.5253854], [42.3911839, -72.525247], [42.390757, -72.5252034], [42.3891968, -72.5247554], [42.389185, -72.5247488], [42.3889829, -72.5246558], [42.388649, -72.5244774], [42.3886761, -72.5243794], [42.3883601, -72.5241933], [42.3877276, -72.5235521], [42.3871163, -72.5226736], [42.3870045, -72.5226087], [42.3869321, -72.5225169], [42.3867756, -72.522294], [42.3863295, -72.5222285], [42.3858109, -72.5219646], [42.3851027, -72.5216039], [42.3845062, -72.5212847], [42.3833772, -72.5206409], [42.3833518, -72.5207348], [42.383315, -72.520714], [42.3825865, -72.5202792], [42.382266, -72.520048], [42.382221, -72.5201417], [42.3817831, -72.5202538], [42.3809466, -72.5201771], [42.3808787, -72.5201712], [42.380704, -72.5201561], [42.3804462, -72.5201339], [42.380181, -72.520111], [42.3798876, -72.5200825], [42.3795839, -72.520053], [42.379331, -72.5200284], [42.3792632, -72.519889], [42.3789183, -72.5200981], [42.3787475, -72.5200934], [42.3786583, -72.5200909], [42.3783947, -72.5200844], [42.3783612, -72.5200834], [42.3780754, -72.5200798], [42.378038, -72.520079], [42.3779978, -72.5200781], [42.3778346, -72.5200766], [42.3776127, -72.5200699], [42.3774914, -72.5200673], [42.3774968, -72.5199094], [42.3774973, -72.5197482], [42.3772842, -72.519748], [42.3770921, -72.5197455], [42.376868, -72.5197516], [42.3768075, -72.5197531], [42.3762319, -72.519752], [42.3759428, -72.519751], [42.3759417, -72.5198579], [42.375831, -72.5198495], [42.3756538, -72.5198407], [42.3755319, -72.5198372], [42.375529, -72.5199553], [42.3754171, -72.5199567], [42.3754188, -72.5203336]
+            ]} color={'red'}  />
+          })}
+        </Map>
+      </div>
+    );
+  }
 }
 
-export default Map
+export default MapComp;
+
+/*
+[
+  [ 48.1423652, 16.3999045 ], [ 48.1458145, 16.3856390 ]
+]
+
+[from_lat, from_long], [to_lat, to_long]
+*/
