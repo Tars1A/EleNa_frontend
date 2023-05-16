@@ -1,7 +1,9 @@
 #map {
-  height: 900px
+  height: 800px
 }
 
 body {
+  position:absolute;
+  top:50%;
   margin: 0px
 }
