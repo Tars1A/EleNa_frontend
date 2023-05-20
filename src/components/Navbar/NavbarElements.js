@@ -5,7 +5,7 @@ export const Nav = styled.nav`
 background: #000;
 z-index:2;
 height:80px;
-opacity:0.4;
+opacity:0.7;
 width : 100vw;
 display:flex;
 justify-content:center;
