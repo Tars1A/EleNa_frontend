@@ -32,7 +32,7 @@ class MapComp extends Component {
     return (
       <div id="map">
         <Map
-          style={{ height: "100vh" }}
+          style={{ height: "100vh",width:"100vw", zIndex:"1" }}
           center={position}
           zoom={this.state.zoom}
         >
