@@ -4,12 +4,12 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import { AutoContainer } from './AutocompleteComponents';
-const LocationSearchInput = () => {
-    const[address,setAddress] = useState("")
-    const[coordinates,setCoordinates] = useState({
-        lat:null,
-        lng:null
-    })
+const LocationSearchInput = ({coordinates,setCoordinates,address, setAddress}) => {
+    // const[address,setAddress] = useState("")
+    // const[coordinates,setCoordinates] = useState({
+    //     lat:null,
+    //     lng:null
+    // })
     const handleSelect = async value => {
         const results = await geocodeByAddress(value);
         const ll = await getLatLng(results[0])
