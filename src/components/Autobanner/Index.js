@@ -4,7 +4,7 @@ import { AutoContainer } from "../Autocomplete/AutocompleteComponents";
 import Demo1 from "../Radio/Index";
 import axios from "axios";
 
-const Banner = () => {
+const Banner = ({setPathCoordinates}) => {
   const [startCoordinates, setStartCoordinates] = useState({
     lat: null,
     lng: null,
@@ -78,6 +78,7 @@ const Banner = () => {
         .then((res) => {
           const {data} = res;
           const coordinates = data["coordinates"];
+          setPathCoordinates(coordinates)
           const elevation = data["elevation"];
           const path_length = data["path_length"];
           const shortest_path_length = data["shortest_path_length"];

@@ -6,7 +6,8 @@ import Navbar from '../Navbar/Index'
 import Sidebar from '../sidebar'
 const MapUI = () => {
     const [isOpen,setIsOpen] = useState(false);
-
+    const [pathCoordinates,setPathCoordinates] = useState([]);
+    
     const toggle = () => {
         setIsOpen(!isOpen)
     }
@@ -15,8 +16,8 @@ const MapUI = () => {
         <MapUIContainer>
             <Sidebar isOpen = {isOpen} toggle = {toggle}/>
             <Navbar toggle = {toggle}/>
-            <Banner />
-            <MapComp />
+            <Banner setPathCoordinates={setPathCoordinates}/>
+            <MapComp pathCoordinates={pathCoordinates}/>
         </MapUIContainer>
     </div>
   )
