@@ -29,7 +29,7 @@ function Navb({toggle}) {
                     <div style={{ margin: '10px' }}>
                         <NavLink to="/Search" style={({ isActive }) => ({ 
                             color: isActive ? 'greenyellow' : 'white' })}>
-                            Contact
+                            Search
                         </NavLink>
                     </div>
                  </NavMenu>
