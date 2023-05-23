@@ -18,6 +18,9 @@ const Banner = ({setPathCoordinates}) => {
 
   const [maximizeMinimize, setMaximizeMinimize] = useState("")
   const [percentage, setPercentage] = useState(0);
+  const [pathLength, setPathLength] = useState(0);
+  const [shortestPathLength, setShortestPathLength] = useState(0);
+  const [elevation, setElevation] = useState(0);
   const onChangeRadio = (e) => {
     const val = e.target.value
     setMaximizeMinimize(val);
@@ -79,9 +82,12 @@ const Banner = ({setPathCoordinates}) => {
           const {data} = res;
           const coordinates = data["coordinates"];
           setPathCoordinates(coordinates)
-          const elevation = data["elevation"];
+          const total_elevation = data["elevation"];
+          setElevation(total_elevation)
           const path_length = data["path_length"];
+          setPathLength(path_length)
           const shortest_path_length = data["shortest_path_length"];
+          setShortestPathLength(shortest_path_length)
           console.log(coordinates)
         })
         .catch((err) => {
@@ -117,6 +123,9 @@ const Banner = ({setPathCoordinates}) => {
           <input type="number"/>
         </div>
         <button onClick={submit}>Find Route!</button>
+        <div>Shortest Path Length: {shortestPathLength}</div>
+        <div>Path Length: {pathLength}</div>
+        <div>Elevation Gained: {elevation}</div>
       </AutoContainer>
     </div>
   );
