@@ -8,7 +8,7 @@ justify-content:center;
 background-color:white;
 height: 600px;
 width: 30vw;
-z-index:3;
+z-index:2;
 left:10%;
 padding-left:5%;
 padding-top: 2%;

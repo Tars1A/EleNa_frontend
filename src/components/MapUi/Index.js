@@ -11,8 +11,8 @@ const MapUI = () => {
     }
   return (
     <div>
+         <Banner setPathCoordinates={setPathCoordinates}/>
         <MapUIContainer>
-            <Banner setPathCoordinates={setPathCoordinates}/>
             <MapComp pathCoordinates={pathCoordinates}/>
         </MapUIContainer>
     </div>
