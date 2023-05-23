@@ -4,6 +4,6 @@ export const MapUIContainer = styled.div`
 
 
 position:absolute;
-left:0%:
-top:0%;
+left:0%;
+right:0%;
 `
