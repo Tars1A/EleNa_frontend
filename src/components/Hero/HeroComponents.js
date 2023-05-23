@@ -10,7 +10,7 @@ height: 1200px;
 width: 100vw;
 top:0%;
 left:0%;
-z-index: 1;
+z-index: 0;
 :before{
     content:"";
     top:0%;

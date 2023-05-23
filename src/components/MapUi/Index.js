@@ -14,8 +14,6 @@ const MapUI = () => {
   return (
     <div>
         <MapUIContainer>
-            <Sidebar isOpen = {isOpen} toggle = {toggle}/>
-            <Navbar toggle = {toggle}/>
             <Banner setPathCoordinates={setPathCoordinates}/>
             <MapComp pathCoordinates={pathCoordinates}/>
         </MapUIContainer>

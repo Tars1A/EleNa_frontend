@@ -6,6 +6,7 @@ import MapComp from '../components/Map/Index'
 import LocationSearchInput  from '../components/Autocomplete/Index'
 import Banner from '../components/Autobanner/Index';
 import MapUI from '../components/MapUi/Index';
+import Navb from '../components/Nav/Index';
 const Home = () => {
     const [isOpen,setIsOpen] = useState(false);
 
@@ -14,10 +15,10 @@ const Home = () => {
     }
   return (
    <>
-   {/* <Sidebar isOpen = {isOpen} toggle = {toggle}/>
-    <Navbar toggle = {toggle}/> 
-  <Hero />   */}
-  <MapUI/>
+   <Sidebar isOpen = {isOpen} toggle = {toggle}/>
+    <Navb isOpen = {isOpen} toggle = {toggle} />
+  <Hero />  
+  {/* <MapUI/> */}
     {/* <LocationSearchInput />
      {/* < MapComp /> */}
    </>
