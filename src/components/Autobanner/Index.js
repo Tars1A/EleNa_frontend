@@ -3,7 +3,7 @@ import LocationSearchInput from "../Autocomplete/Index";
 import { AutoContainer } from "../Autocomplete/AutocompleteComponents";
 import Demo1 from "../Radio/Index";
 import axios from "axios";
-// import { Button } from "./ButtonElement";
+import { Button } from "./ButtonElement";
 const Banner = ({setPathCoordinates}) => {
   const [startCoordinates, setStartCoordinates] = useState({
     lat: null,
@@ -122,7 +122,7 @@ const Banner = ({setPathCoordinates}) => {
         <div onChange={onChangePercent}>
           <input type="number"/>
         </div>
-        <button onClick={submit}>Find Route!</button>
+        <Button onClick={submit}>Find Route!</Button>
         <div>Shortest Path Length: {shortestPathLength}</div>
         <div>Path Length: {pathLength}</div>
         <div>Elevation Gained: {elevation}</div>

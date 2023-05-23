@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {MdArrowForward,MdKeyboardArrowRight} from 'react-icons/md'
 export const AutoContainer = styled.div`
 
 // display:flex;
