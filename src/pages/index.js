@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import Navb from '../components/Nav/Index';
+import Sidebar from '../components/sidebar';
 const Home = () => {
     const [isOpen,setIsOpen] = useState(false);
 
@@ -8,8 +9,8 @@ const Home = () => {
     }
   return (
    <>
-     <Navb>
-    </Navb>
+   <Sidebar isOpen = {isOpen} toggle = {toggle}/>
+   <Navb  isOpen = {isOpen} toggle = {toggle}/>
    </>
   )
 }
