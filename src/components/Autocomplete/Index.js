@@ -18,9 +18,9 @@ const LocationSearchInput = ({coordinates,setCoordinates,address, setAddress}) =
         setCoordinates(ll)
     }
     return (<>
-    <p>lat: {coordinates.lat}</p>
-    <p>long: {coordinates.lng}</p>
-    <p>address: {address}</p>
+    <p>Lat: {coordinates.lat}</p>
+    <p>Long: {coordinates.lng}</p>
+    <p>Address: {address}</p>
 
      <PlacesAutocomplete
         value={address}

@@ -65,7 +65,7 @@ const MapComp  = ({pathCoordinates}) => {
     else return (
       <div id="map">
         <Map
-          style={{ height: "100vh",width:"100vw", zIndex:"1" }}
+          style={{ height: " 1200vh",width:"100vw", zIndex:"1" }}
           center={position}
           zoom={state.zoom}
         >

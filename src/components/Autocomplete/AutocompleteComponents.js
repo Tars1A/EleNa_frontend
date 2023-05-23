@@ -12,6 +12,7 @@ width: 30vw;
 z-index:6;
 left:10%;
 padding-left:5%;
+padding-top: 2%;
 flex-direction: column;
 // border-radius :10px;
 box-shadow:1px 4px 5px grey;

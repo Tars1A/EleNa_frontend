@@ -2,6 +2,8 @@ import React,{useState} from 'react'
 import { HeroContainer,HeroBg,VideoBg,HeroContent,HeroH1,HeroH2,HeroP,HeroBttnWrapper,ArrowForward,ArrowRight} from './HeroComponents';
 import Video from '../../videos/video3.mp4'
 import { Button } from './ButtonElement';
+import { Link,Routes,Route,NavLink } from 'react-router-dom';
+import MapUI from '../MapUi/Index';
 import { MdArrowForward, MdArrowRight } from 'react-icons/md';
  const Hero = () => {
     const [hover,setHover] = useState(false)
@@ -24,7 +26,13 @@ import { MdArrowForward, MdArrowRight } from 'react-icons/md';
       you may want to maximize elevation gain if you are looking for an intense yet time-constrained workout.
       </HeroP>
       <HeroBttnWrapper>
-        <Button to = "Search" onMouseEnter={onHover} onMouseLeave = {onHover} primary = "true" dark = "true">Search {hover ?<ArrowForward/>:<ArrowRight/>}</Button>
+        <Button to = "/Search" onMouseEnter={onHover} onMouseLeave = {onHover} primary = "true" dark = "true"><NavLink to="/Search" style={({ isActive }) => ({ 
+                            color: isActive ? 'greenyellow' : 'white' })}>
+                            Search
+                        </NavLink>{hover ?<ArrowForward/>:<ArrowRight/>}</Button>
+        <Routes>
+        <Route exact path="Search" element={<MapUI />} />
+        </Routes>
       </HeroBttnWrapper>
     </HeroContent>
     </HeroContainer>

@@ -15,12 +15,8 @@ const Home = () => {
     }
   return (
    <>
-   <Sidebar isOpen = {isOpen} toggle = {toggle}/>
-    <Navb isOpen = {isOpen} toggle = {toggle} />
-  <Hero />  
-  {/* <MapUI/> */}
-    {/* <LocationSearchInput />
-     {/* < MapComp /> */}
+     <Navb>
+    </Navb>
    </>
   )
 }

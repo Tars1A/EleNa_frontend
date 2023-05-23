@@ -3,6 +3,7 @@ import {FaBars} from 'react-icons/fa'
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import {Nav,NavbarContainer,NavLogo,MobileIcon,NavMenu} from './NavElements'
 import MapUI from "../MapUi/Index";
+import Home from "../Home/Index"
 function Navb({toggle}) {
   
     return (
@@ -36,8 +37,8 @@ function Navb({toggle}) {
     </NavbarContainer>
     </Nav>
                 <Routes>
-                    {/* <Route exact path="/" element={<Home />} />
-                    <Route exact path="/about" element={<Home />} /> */}
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/about" element={<Home />} />
                     <Route exact path="/Search" element={<MapUI />} />
                 </Routes>
         </>
