@@ -28,7 +28,7 @@ import { MdArrowForward, MdArrowRight } from 'react-icons/md';
       <HeroBttnWrapper>
         <Button to = "/Search" onMouseEnter={onHover} onMouseLeave = {onHover} primary = "true" dark = "true"><NavLink to="/Search" style={({ isActive }) => ({ 
                             color: isActive ? 'greenyellow' : 'white' })}>
-                            Search
+                            SEARCH
                         </NavLink>{hover ?<ArrowForward/>:<ArrowRight/>}</Button>
         <Routes>
         <Route exact path="Search" element={<MapUI />} />
