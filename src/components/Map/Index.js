@@ -66,7 +66,7 @@ const MapComp  = ({pathCoordinates}) => {
       <div id="map">
         <Map
           style={{ height: " 1200vh",width:"100vw", zIndex:"1" }}
-          center={position}
+          center={pathCoordinates[0]}
           zoom={state.zoom}
         >
           <TileLayer
